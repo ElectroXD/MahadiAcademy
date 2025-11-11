@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MahadiAcademy - Deloyar Sir</title>
+    <link rel="icon" href="MahadiAcademy.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --white: #ffffff;
+            --black: #000000;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --medium-gray: #e0e0e0;
+            --accent: #2c2c2c;
+            --blue: #0066cc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .dark-mode {
+            --white: #000000;
+            --black: #ffffff;
+            --light-gray: #1a1a1a;
+            --dark-gray: #e0e0e0;
+            --medium-gray: #2c2c2c;
+            --accent: #f5f5f5;
+            --blue: #4dabf7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 40px 0 20px;
+            border-bottom: 1px solid var(--medium-gray);
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            margin-top: 8px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--medium-gray);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--black);
+            font-size: 1.2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+        }
+
+        .projects-section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .project-card {
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--black);
+        }
+
+        .project-image {
+            height: 180px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--dark-gray);
+        }
+
+        .project-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .project-description {
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .project-link {
+            display: inline-block;
+            background-color: var(--black);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .project-link:hover {
+            background-color: var(--dark-gray);
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--dark-gray);
+        }
+
+        .coming-soon h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--medium-gray);
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .credit {
+            font-size: 1rem;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+        }
+
+        .credit strong {
+            color: var(--black);
+            font-weight: 600;
+        }
+
+        .credit-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .credit-link {
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .credit-link:hover {
+            color: var(--black);
+        }
+
+        .companies {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .company-tag {
+            background: var(--light-gray);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .theme-toggle {
+                align-self: flex-end;
+                margin-top: -60px;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .credit-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 0;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .project-image {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="MahadiAcademy.png" alt="MahadiAcademy Logo" class="logo">
+                    <div>
+                        <h1>MahadiAcademy</h1>
+                        <p class="subtitle">Projects for Deloyar Sir</p>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <h2>Welcome to MahadiAcademy Projects</h2>
+                <p>A collection of digital tools and resources created for Deloyar Sir to enhance teaching and learning experiences.</p>
+            </section>
+
+            <section class="projects-section">
+                <h2 class="section-title">Current Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Science Symbols</h3>
+                            <p class="project-description">Copy and paste symbols for Math, Physics, and Chemistry.</p>
+                            <a href="symbols.html" class="project-link">Open Project</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="coming-soon">
+                <h3>More Projects Coming Soon</h3>
+                <p>Stay tuned for more educational tools and resources</p>
+            </section>
+        </main>
+
+        <footer>
+            <div class="credit">
+                Created by <strong>Raiyan</strong>
+            </div>
+            <div class="credit-links">
+                <a href="#" class="credit-link" onclick="showCreditsModal()">
+                    <i class="fas fa-info-circle"></i> About
+                </a>
+                <a href="https://electroxd.github.io" class="credit-link" target="_blank">
+                    <i class="fab fa-chrome"></i> Website
+                </a>
+            </div>
+            <div>
+                <div class="companies">
+                    <div class="company-tag">Mahadi Academy</div>
+                </div>
+            </div> 
+        </footer>
+    </div>
+
+    <div id="creditsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: var(--white); padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; text-align: center;">
+            <h2 style="margin-bottom: 20px;">About the Creator</h2>
+            <p style="margin-bottom: 15px; line-height: 1.6;">
+                This website is created by <strong>Raiyan</strong> to provide useful tools for Deloyar Sir and Mahadi Academy.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;">
+                <div>
+                    <strong>GitHub:</strong> 
+                    <a href="https://github.com/electroxd" target="_blank" style="color: var(--blue);">ElectroXD</a>
+                </div>
+            </div>
+            <button onclick="closeCreditsModal()" style="background: var(--black); color: var(--white); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        function showCreditsModal() {
+            document.getElementById('creditsModal').style.display = 'flex';
+        }
+
+        function closeCreditsModal() {
+            document.getElementById('creditsModal').style.display = 'none';
+        }
+        document.getElementById('creditsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCreditsModal();
+            }
+        });
+    </script>
+</body>
+</html>
