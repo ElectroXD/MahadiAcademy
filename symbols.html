@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Symbols</title>
+    <link rel="icon" href="MahadiAcademy.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --white: #ffffff;
+            --black: #000000;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --medium-gray: #e0e0e0;
+            --accent: #2c2c2c;
+            --blue: #0066cc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .dark-mode {
+            --white: #000000;
+            --black: #ffffff;
+            --light-gray: #1a1a1a;
+            --dark-gray: #e0e0e0;
+            --medium-gray: #2c2c2c;
+            --accent: #f5f5f5;
+            --blue: #4dabf7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 40px 0 20px;
+            border-bottom: 1px solid var(--medium-gray);
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            margin-top: 8px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--medium-gray);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--black);
+            font-size: 1.2rem;
+        }
+
+        .search-container {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: var(--white);
+            color: var(--black);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--black);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-gray);
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+        }
+
+        .search-suggestion {
+            padding: 10px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-suggestion:hover {
+            background-color: var(--light-gray);
+        }
+
+        .suggestion-category {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            background: var(--medium-gray);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            color: var(--black);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background-color: var(--black);
+            color: var(--white);
+            border-color: var(--black);
+        }
+
+        .tab[data-category="favorites"] {
+            background-color: var(--black);
+            color: var(--white);
+            border-color: var(--black);
+        }
+
+        .symbols-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        .symbol-card {
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px;
+            transition: all 0.2s;
+            position: relative;
+            user-select: none;
+        }
+
+        .symbol-card:hover {
+            border-color: var(--black);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .symbol-card.favorite::before {
+            content: "★";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--black);
+            font-size: 0.9rem;
+        }
+
+        .symbol {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .symbol-name {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            line-height: 1.4;
+        }
+
+        .composer-section {
+            margin: 20px 0 40px 0;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .composer-header {
+            background-color: var(--light-gray);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .composer-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .composer-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 20px;
+            border: none;
+            resize: vertical;
+            font-size: 1.1rem;
+            font-family: inherit;
+            background-color: var(--white);
+            color: var(--black);
+        }
+
+        .composer-textarea:focus {
+            outline: none;
+        }
+
+        .composer-actions {
+            padding: 15px 20px;
+            background-color: var(--light-gray);
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .composer-button {
+            padding: 8px 16px;
+            background-color: var(--black);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .composer-button:hover {
+            opacity: 0.9;
+        }
+
+        .composer-button.secondary {
+            background-color: transparent;
+            color: var(--dark-gray);
+            border: 1px solid var(--medium-gray);
+        }
+
+        .composer-stats {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--black);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+
+        .copy-notification.show {
+            opacity: 1;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--medium-gray);
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .credit {
+            font-size: 1rem;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+        }
+
+        .credit strong {
+            color: var(--black);
+            font-weight: 600;
+        }
+
+        .credit-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .credit-link {
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .credit-link:hover {
+            color: var(--black);
+        }
+
+        .companies {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .company-tag {
+            background: var(--light-gray);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 0;
+            color: var(--dark-gray);
+        }
+
+        .suggested-results {
+            margin-top: 30px;
+        }
+
+        .suggested-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        .tip-message {
+            text-align: center;
+            margin: 10px 0;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .symbols-container {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .theme-toggle {
+                align-self: flex-end;
+                margin-top: -60px;
+            }
+            
+            .credit-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .composer-actions {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .symbols-container {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            
+            .symbol {
+                font-size: 1.8rem;
+            }
+            
+            .symbol-name {
+                font-size: 0.8rem;
+            }
+            
+            .tab {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>Science Symbols</h1>
+                    <p class="subtitle">Copy and paste symbols for Math, Physics, and Chemistry</p>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchBox" placeholder="Search symbols...">
+                <i class="fas fa-search search-icon"></i>
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </div>
+
+            <div class="composer-section">
+                <div class="composer-header">
+                    <div class="composer-title">Text Composer</div>
+                    <div class="composer-stats">
+                        <span id="characterCount">0</span> characters
+                    </div>
+                </div>
+                <textarea class="composer-textarea" id="composerTextarea" placeholder="Type or paste your text here"></textarea>
+                <div class="composer-actions">
+                    <div>
+                        <button class="composer-button secondary" id="clearComposer">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                    </div>
+                    <button class="composer-button" id="copyComposerText">
+                        <i class="fas fa-copy"></i> Copy All Text
+                    </button>
+                </div>
+            </div>
+
+            <div class="category-tabs">
+                <button class="tab active" data-category="math">Mathematics</button>
+                <button class="tab" data-category="physics">Physics</button>
+                <button class="tab" data-category="chemistry">Chemistry</button>
+                <button class="tab" data-category="higher-math">Higher Math</button>
+                <button class="tab" data-category="vectors">Vectors</button>
+                <button class="tab" data-category="superscripts">Superscripts</button>
+                <button class="tab" data-category="subscripts">Subscripts</button>
+                <button class="tab" data-category="trigonometry">Trigonometry</button>
+                <button class="tab" data-category="greek">Greek Letters</button>
+                <button class="tab" data-category="logic">Logic & Sets</button>
+                <button class="tab" data-category="functions">Functions</button>
+                <button class="tab" data-category="matrices">Matrices</button>
+                <button class="tab" data-category="number-sets">Number Sets</button>
+                <button class="tab" data-category="series">Series & Limits</button>
+                <button class="tab" data-category="boolean">Boolean Logic</button>
+                <button class="tab" data-category="discrete">Discrete Math</button>
+                <button class="tab" data-category="geometry">Geometry</button>
+                <button class="tab" data-category="favorites">Favorites ★</button>
+            </div>
+
+            <div class="tip-message">
+                Hold any symbol for 1 second to add/remove from favorites
+            </div>
+
+            <div class="symbols-container" id="symbolsContainer">
+            </div>
+
+            <div class="suggested-results" id="suggestedResults" style="display: none;">
+                <h3 class="suggested-title">Found in other categories:</h3>
+                <div class="symbols-container" id="suggestedSymbolsContainer">
+                </div>
+            </div>
+        </main>
+
+        <div class="copy-notification" id="copyNotification">
+            Symbol copied to clipboard!
+        </div>
+        
+        <footer>
+            <div class="credit">
+                Created by <strong>Raiyan</strong>
+            </div>
+            <div class="credit-links">
+                <a href="#" class="credit-link" onclick="showCreditsModal()">
+                    <i class="fas fa-info-circle"></i> About
+                </a>
+                <a href="https://electroxd.github.io" class="credit-link" target="_blank">
+                    <i class="fab fa-chrome"></i> Website
+                </a>
+            </div>
+            <div>
+                <div class="companies">
+                    <div class="company-tag">Mahadi Academy</div>
+                </div>
+            </div> 
+        </footer>
+    </div>
+
+    <div id="creditsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: var(--white); padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; text-align: center;">
+            <h2 style="margin-bottom: 20px;">About the Creator</h2>
+            <p style="margin-bottom: 15px; line-height: 1.6;">
+                This website is created by <strong>Raiyan</strong> to copy symbols.
+                it will be easy for gathering symbols for Math, Physics, and Chemistry.
+                This is Specially made for <strong>Mahadi Academy</strong>
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;">
+                <div>
+                    <strong>GitHub:</strong> 
+                    <a href="https://github.com/electroxd" target="_blank" style="color: var(--blue);">ElectroXD</a>
+                </div>
+            </div>
+            <button onclick="closeCreditsModal()" style="background: var(--black); color: var(--white); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const symbolsData = {
+            math: [
+                { name: "Pi", symbol: "π" },
+                { name: "Infinity", symbol: "∞" },
+                { name: "Square Root", symbol: "√" },
+                { name: "Summation", symbol: "∑" },
+                { name: "Integral", symbol: "∫" },
+                { name: "Partial Differential", symbol: "∂" },
+                { name: "Product", symbol: "∏" },
+                { name: "Angle", symbol: "∠" },
+                { name: "Degree", symbol: "°" },
+                { name: "Plus-Minus", symbol: "±" },
+                { name: "Minus-Plus", symbol: "∓" },
+                { name: "Not Equal", symbol: "≠" },
+                { name: "Approximately Equal", symbol: "≈" },
+                { name: "Almost Equal", symbol: "≅" },
+                { name: "Less Than or Equal", symbol: "≤" },
+                { name: "Greater Than or Equal", symbol: "≥" },
+                { name: "Much Less Than", symbol: "≪" },
+                { name: "Much Greater Than", symbol: "≫" },
+                { name: "Proportional To", symbol: "∝" },
+                { name: "Therefore", symbol: "∴" },
+                { name: "Because", symbol: "∵" },
+                { name: "Ratio", symbol: "∶" },
+                { name: "Dot Operator", symbol: "⋅" },
+                { name: "Ring Operator", symbol: "∘" },
+                { name: "Asterisk Operator", symbol: "∗" },
+                { name: "Bullet Operator", symbol: "∙" },
+                { name: "Empty Set", symbol: "∅" },
+                { name: "Element Of", symbol: "∈" },
+                { name: "Not Element Of", symbol: "∉" },
+                { name: "Subset Of", symbol: "⊂" },
+                { name: "Superset Of", symbol: "⊃" },
+                { name: "Union", symbol: "∪" },
+                { name: "Intersection", symbol: "∩" },
+                { name: "For All", symbol: "∀" },
+                { name: "There Exists", symbol: "∃" },
+                { name: "Nabla", symbol: "∇" },
+                { name: "Laplacian", symbol: "∆" },
+                { name: "Function", symbol: "ƒ" },
+                { name: "Factorial", symbol: "!" },
+                { name: "Percent", symbol: "%" },
+                { name: "Per Mille", symbol: "‰" }
+            ],
+            physics: [
+                { name: "Alpha", symbol: "α" },
+                { name: "Beta", symbol: "β" },
+                { name: "Gamma", symbol: "γ" },
+                { name: "Delta", symbol: "δ" },
+                { name: "Epsilon", symbol: "ε" },
+                { name: "Zeta", symbol: "ζ" },
+                { name: "Eta", symbol: "η" },
+                { name: "Theta", symbol: "θ" },
+                { name: "Iota", symbol: "ι" },
+                { name: "Kappa", symbol: "κ" },
+                { name: "Lambda", symbol: "λ" },
+                { name: "Mu", symbol: "μ" },
+                { name: "Nu", symbol: "ν" },
+                { name: "Xi", symbol: "ξ" },
+                { name: "Omicron", symbol: "ο" },
+                { name: "Pi", symbol: "π" },
+                { name: "Rho", symbol: "ρ" },
+                { name: "Sigma", symbol: "σ" },
+                { name: "Tau", symbol: "τ" },
+                { name: "Upsilon", symbol: "υ" },
+                { name: "Phi", symbol: "φ" },
+                { name: "Chi", symbol: "χ" },
+                { name: "Psi", symbol: "ψ" },
+                { name: "Omega", symbol: "ω" },
+                { name: "Planck's Constant", symbol: "ℎ" },
+                { name: "Reduced Planck's Constant", symbol: "ℏ" },
+                { name: "Speed of Light", symbol: "𝑐" },
+                { name: "Angstrom", symbol: "Å" },
+                { name: "Dot Over", symbol: "◌̇" },
+                { name: "Double Dot Over", symbol: "◌̈" },
+                { name: "Vector", symbol: "→" },
+                { name: "Unit Vector", symbol: "̂" },
+                { name: "Perpendicular", symbol: "⊥" },
+                { name: "Parallel", symbol: "∥" },
+                { name: "Right Arrow", symbol: "→" },
+                { name: "Left Arrow", symbol: "←" },
+                { name: "Up Arrow", symbol: "↑" },
+                { name: "Down Arrow", symbol: "↓" },
+                { name: "Left-Right Arrow", symbol: "↔" },
+                { name: "Up-Down Arrow", symbol: "↕" },
+                { name: "North East Arrow", symbol: "↗" },
+                { name: "North West Arrow", symbol: "↖" },
+                { name: "South East Arrow", symbol: "↘" },
+                { name: "South West Arrow", symbol: "↙" }
+            ],
+            chemistry: [
+                { name: "Reversible Reaction", symbol: "⇌" },
+                { name: "Equilibrium", symbol: "⇋" },
+                { name: "Yield", symbol: "→" },
+                { name: "Gas", symbol: "(g)" },
+                { name: "Liquid", symbol: "(l)" },
+                { name: "Solid", symbol: "(s)" },
+                { name: "Aqueous", symbol: "(aq)" },
+                { name: "Upwards Arrow", symbol: "↑" },
+                { name: "Downwards Arrow", symbol: "↓" },
+                { name: "Degree", symbol: "°" },
+                { name: "Partial Charge Plus", symbol: "δ+" },
+                { name: "Partial Charge Minus", symbol: "δ-" },
+                { name: "Bond", symbol: "―" },
+                { name: "Double Bond", symbol: "=" },
+                { name: "Triple Bond", symbol: "≡" },
+                { name: "Wedge Bond", symbol: "△" },
+                { name: "Dash Bond", symbol: "▽" },
+                { name: "Ring", symbol: "◯" },
+                { name: "Benzene Ring", symbol: "⬡" },
+                { name: "Heat", symbol: "Δ" },
+                { name: "Catalyst", symbol: "→" },
+                { name: "Light", symbol: "hν" },
+                { name: "Alpha Particle", symbol: "α" },
+                { name: "Beta Particle", symbol: "β" },
+                { name: "Gamma Ray", symbol: "γ" },
+                { name: "Electron", symbol: "e⁻" },
+                { name: "Proton", symbol: "p⁺" },
+                { name: "Neutron", symbol: "n" },
+                { name: "Positron", symbol: "e⁺" },
+                { name: "Hydron", symbol: "H⁺" },
+                { name: "Hydroxide", symbol: "OH⁻" },
+                { name: "Oxidation Number", symbol: "⊕" },
+                { name: "Reduction Number", symbol: "⊖" }
+            ],
+            "higher-math": [
+                { name: "Aleph Null", symbol: "ℵ₀" },
+                { name: "Beth", symbol: "ℶ" },
+                { name: "Gimel", symbol: "ℷ" },
+                { name: "Dalet", symbol: "ℸ" },
+                { name: "Weierstrass p", symbol: "℘" },
+                { name: "Script F", symbol: "ℱ" },
+                { name: "Script L", symbol: "ℒ" },
+                { name: "Fourier Transform", symbol: "ℱ" },
+                { name: "Laplace Transform", symbol: "ℒ" },
+                { name: "Z Transform", symbol: "𝒵" },
+                { name: "Imaginary Part", symbol: "ℑ" },
+                { name: "Real Part", symbol: "ℜ" },
+                { name: "Hilbert Space", symbol: "ℋ" },
+                { name: "Direct Sum", symbol: "⊕" },
+                { name: "Tensor Product", symbol: "⊗" },
+                { name: "Wedge Product", symbol: "∧" },
+                { name: "Vertical Ellipsis", symbol: "⋮" },
+                { name: "Diagonal Ellipsis", symbol: "⋱" },
+                { name: "Midline Horizontal Ellipsis", symbol: "⋯" },
+                { name: "Lower Left Ellipsis", symbol: "⋰" },
+                { name: "Up Right Ellipsis", symbol: "⋰" },
+                { name: "QED", symbol: "∎" },
+                { name: "Measurable Function", symbol: "𝓜" },
+                { name: "Lebesgue Integral", symbol: "∫" },
+                { name: "Contour Integral", symbol: "∮" },
+                { name: "Surface Integral", symbol: "∯" },
+                { name: "Volume Integral", symbol: "∰" },
+                { name: "Clockwise Integral", symbol: "∱" },
+                { name: "Anticlockwise Integral", symbol: "∲" },
+                { name: "Double Integral", symbol: "∬" },
+                { name: "Triple Integral", symbol: "∭" },
+                { name: "Quadruple Integral", symbol: "⨌" },
+                { name: "Line Integral", symbol: "∫" },
+                { name: "Closed Line Integral", symbol: "∮" }
+            ],
+            vectors: [
+                { name: "Vector AB", symbol: "AB⃗" },
+                { name: "Vector BA", symbol: "BA⃗" },
+                { name: "Vector AC", symbol: "AC⃗" },
+                { name: "Vector BC", symbol: "BC⃗" },
+                { name: "Vector CA", symbol: "CA⃗" },
+                { name: "Vector CB", symbol: "CB⃗" },
+                { name: "Vector a", symbol: "a⃗" },
+                { name: "Vector b", symbol: "b⃗" },
+                { name: "Vector c", symbol: "c⃗" },
+                { name: "Vector v", symbol: "v⃗" },
+                { name: "Vector u", symbol: "u⃗" },
+                { name: "Vector i", symbol: "î" },
+                { name: "Vector j", symbol: "ĵ" },
+                { name: "Vector k", symbol: "k̂" },
+                { name: "Vector x", symbol: "x⃗" },
+                { name: "Vector y", symbol: "y⃗" },
+                { name: "Vector z", symbol: "z⃗" },
+                { name: "Unit Vector", symbol: "û" },
+                { name: "Right Arrow Over", symbol: "→" },
+                { name: "Left Arrow Over", symbol: "←" },
+                { name: "Up Arrow Over", symbol: "↑" },
+                { name: "Down Arrow Over", symbol: "↓" },
+                { name: "Double Headed Arrow", symbol: "↔" }
+            ],
+            superscripts: [
+                { name: "Power 0", symbol: "⁰" },
+                { name: "Power 1", symbol: "¹" },
+                { name: "Power 2", symbol: "²" },
+                { name: "Power 3", symbol: "³" },
+                { name: "Power 4", symbol: "⁴" },
+                { name: "Power 5", symbol: "⁵" },
+                { name: "Power 6", symbol: "⁶" },
+                { name: "Power 7", symbol: "⁷" },
+                { name: "Power 8", symbol: "⁸" },
+                { name: "Power 9", symbol: "⁹" },
+                { name: "Power Plus", symbol: "⁺" },
+                { name: "Power Minus", symbol: "⁻" },
+                { name: "Power Equals", symbol: "⁼" },
+                { name: "Power Left Paren", symbol: "⁽" },
+                { name: "Power Right Paren", symbol: "⁾" },
+                { name: "Power n", symbol: "ⁿ" },
+                { name: "Power i", symbol: "ⁱ" },
+                { name: "Power j", symbol: "ʲ" },
+                { name: "Square Root", symbol: "√" },
+                { name: "Cube Root", symbol: "∛" },
+                { name: "Fourth Root", symbol: "∜" },
+                { name: "Squared", symbol: "²" },
+                { name: "Cubed", symbol: "³" },
+                { name: "To Power 4", symbol: "⁴" },
+                { name: "To Power 5", symbol: "⁵" },
+                { name: "To Power 6", symbol: "⁶" },
+                { name: "To Power 7", symbol: "⁷" },
+                { name: "To Power 8", symbol: "⁸" },
+                { name: "To Power 9", symbol: "⁹" }
+            ],
+            subscripts: [
+                { name: "Subscript 0", symbol: "₀" },
+                { name: "Subscript 1", symbol: "₁" },
+                { name: "Subscript 2", symbol: "₂" },
+                { name: "Subscript 3", symbol: "₃" },
+                { name: "Subscript 4", symbol: "₄" },
+                { name: "Subscript 5", symbol: "₅" },
+                { name: "Subscript 6", symbol: "₆" },
+                { name: "Subscript 7", symbol: "₇" },
+                { name: "Subscript 8", symbol: "₈" },
+                { name: "Subscript 9", symbol: "₉" },
+                { name: "Subscript Plus", symbol: "₊" },
+                { name: "Subscript Minus", symbol: "₋" },
+                { name: "Subscript Equals", symbol: "₌" },
+                { name: "Subscript Left Paren", symbol: "₍" },
+                { name: "Subscript Right Paren", symbol: "₎" },
+                { name: "Subscript a", symbol: "ₐ" },
+                { name: "Subscript e", symbol: "ₑ" },
+                { name: "Subscript h", symbol: "ₕ" },
+                { name: "Subscript i", symbol: "ᵢ" },
+                { name: "Subscript j", symbol: "ⱼ" },
+                { name: "Subscript k", symbol: "ₖ" },
+                { name: "Subscript l", symbol: "ₗ" },
+                { name: "Subscript m", symbol: "ₘ" },
+                { name: "Subscript n", symbol: "ₙ" },
+                { name: "Subscript o", symbol: "ₒ" },
+                { name: "Subscript p", symbol: "ₚ" },
+                { name: "Subscript r", symbol: "ᵣ" },
+                { name: "Subscript s", symbol: "ₛ" },
+                { name: "Subscript t", symbol: "ₜ" },
+                { name: "Subscript u", symbol: "ᵤ" },
+                { name: "Subscript v", symbol: "ᵥ" },
+                { name: "Subscript x", symbol: "ₓ" }
+            ],
+            trigonometry: [
+                { name: "Sine", symbol: "sin" },
+                { name: "Cosine", symbol: "cos" },
+                { name: "Tangent", symbol: "tan" },
+                { name: "Cosecant", symbol: "csc" },
+                { name: "Secant", symbol: "sec" },
+                { name: "Cotangent", symbol: "cot" },
+                { name: "Arc Sine", symbol: "arcsin" },
+                { name: "Arc Cosine", symbol: "arccos" },
+                { name: "Arc Tangent", symbol: "arctan" },
+                { name: "Hyperbolic Sine", symbol: "sinh" },
+                { name: "Hyperbolic Cosine", symbol: "cosh" },
+                { name: "Hyperbolic Tangent", symbol: "tanh" }
+            ],
+            greek: [
+                { name: "Alpha", symbol: "α" },
+                { name: "Beta", symbol: "β" },
+                { name: "Gamma", symbol: "γ" },
+                { name: "Delta", symbol: "δ" },
+                { name: "Epsilon", symbol: "ε" },
+                { name: "Zeta", symbol: "ζ" },
+                { name: "Eta", symbol: "η" },
+                { name: "Theta", symbol: "θ" },
+                { name: "Iota", symbol: "ι" },
+                { name: "Kappa", symbol: "κ" },
+                { name: "Lambda", symbol: "λ" },
+                { name: "Mu", symbol: "μ" },
+                { name: "Nu", symbol: "ν" },
+                { name: "Xi", symbol: "ξ" },
+                { name: "Omicron", symbol: "ο" },
+                { name: "Pi", symbol: "π" },
+                { name: "Rho", symbol: "ρ" },
+                { name: "Sigma", symbol: "σ" },
+                { name: "Tau", symbol: "τ" },
+                { name: "Upsilon", symbol: "υ" },
+                { name: "Phi", symbol: "φ" },
+                { name: "Chi", symbol: "χ" },
+                { name: "Psi", symbol: "ψ" },
+                { name: "Omega", symbol: "ω" }
+            ],
+            logic: [
+                { name: "For All", symbol: "∀" },
+                { name: "There Exists", symbol: "∃" },
+                { name: "There Exists Unique", symbol: "∃!" },
+                { name: "Does Not Exist", symbol: "∄" },
+                { name: "Element Of", symbol: "∈" },
+                { name: "Not Element Of", symbol: "∉" },
+                { name: "Union", symbol: "∪" },
+                { name: "Intersection", symbol: "∩" },
+                { name: "Subset", symbol: "⊂" },
+                { name: "Subset or Equal", symbol: "⊆" },
+                { name: "Superset", symbol: "⊃" },
+                { name: "Superset or Equal", symbol: "⊇" },
+                { name: "Set Minus", symbol: "∖" },
+                { name: "Empty Set", symbol: "∅" },
+                { name: "Not", symbol: "¬" },
+                { name: "And", symbol: "∧" },
+                { name: "Or", symbol: "∨" },
+                { name: "Implies", symbol: "⇒" },
+                { name: "If and Only If", symbol: "⇔" }
+            ],
+            functions: [
+                { name: "Logarithm", symbol: "log" },
+                { name: "Natural Logarithm", symbol: "ln" },
+                { name: "Logarithm Base b", symbol: "log_b" },
+                { name: "Modulo", symbol: "mod" },
+                { name: "Greatest Common Divisor", symbol: "gcd" },
+                { name: "Least Common Multiple", symbol: "lcm" },
+                { name: "Exponential", symbol: "exp" },
+                { name: "Absolute Value", symbol: "abs" },
+                { name: "Floor", symbol: "⌊ ⌋" },
+                { name: "Ceiling", symbol: "⌈ ⌉" }
+            ],
+            matrices: [
+                { name: "2x2 Matrix", symbol: "[ ]" },
+                { name: "Matrix Parentheses", symbol: "( )" },
+                { name: "Determinant", symbol: "det" },
+                { name: "Transpose", symbol: "T" },
+                { name: "Identity Matrix", symbol: "I" },
+                { name: "Zero Matrix", symbol: "0" },
+                { name: "Matrix Element", symbol: "a_{ij}" }
+            ],
+            "number-sets": [
+                { name: "Natural Numbers", symbol: "ℕ" },
+                { name: "Integers", symbol: "ℤ" },
+                { name: "Rational Numbers", symbol: "ℚ" },
+                { name: "Real Numbers", symbol: "ℝ" },
+                { name: "Complex Numbers", symbol: "ℂ" },
+                { name: "Prime Numbers", symbol: "ℙ" }
+            ],
+            series: [
+                { name: "Summation", symbol: "∑" },
+                { name: "Product", symbol: "∏" },
+                { name: "Limit", symbol: "lim" },
+                { name: "Limit to Infinity", symbol: "lim→∞" },
+                { name: "Limit from Left", symbol: "lim⁻" },
+                { name: "Limit from Right", symbol: "lim⁺" },
+                { name: "Infinite Series", symbol: "∑∞" },
+                { name: "Finite Product", symbol: "∏ⁿ" },
+                { name: "Big Union", symbol: "⋃" },
+                { name: "Big Intersection", symbol: "⋂" },
+                { name: "Power Series", symbol: "∑xⁿ" }
+            ],
+            boolean: [
+                { name: "XOR", symbol: "⊕" },
+                { name: "XNOR", symbol: "⊙" },
+                { name: "NAND", symbol: "↑" },
+                { name: "NOR", symbol: "↓" },
+                { name: "Boolean And", symbol: "∧" },
+                { name: "Boolean Or", symbol: "∨" },
+                { name: "Boolean Not", symbol: "¬" }
+            ],
+            discrete: [
+                { name: "Binomial Coefficient", symbol: "C(n,k)" },
+                { name: "Permutation", symbol: "P(n,k)" },
+                { name: "Factorial", symbol: "n!" },
+                { name: "Combination", symbol: "nCk" },
+                { name: "Permutation", symbol: "nPk" }
+            ],
+            geometry: [
+                { name: "Angle", symbol: "∠" },
+                { name: "Right Angle", symbol: "∟" },
+                { name: "Triangle", symbol: "△" },
+                { name: "Square", symbol: "□" },
+                { name: "Circle", symbol: "○" },
+                { name: "Arc", symbol: "⌒" },
+                { name: "Parallel", symbol: "∥" },
+                { name: "Perpendicular", symbol: "⊥" },
+                { name: "Congruent", symbol: "≅" },
+                { name: "Similar", symbol: "∼" }
+            ]
+        };
+
+        const themeToggle = document.getElementById('themeToggle');
+        const tabs = document.querySelectorAll('.tab');
+        const symbolsContainer = document.getElementById('symbolsContainer');
+        const copyNotification = document.getElementById('copyNotification');
+        const searchBox = document.getElementById('searchBox');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+        const suggestedResults = document.getElementById('suggestedResults');
+        const suggestedSymbolsContainer = document.getElementById('suggestedSymbolsContainer');
+        
+        const composerTextarea = document.getElementById('composerTextarea');
+        const copyComposerButton = document.getElementById('copyComposerText');
+        const clearComposerButton = document.getElementById('clearComposer');
+        const characterCount = document.getElementById('characterCount');
+
+        let currentSearchTerm = '';
+        let favorites = JSON.parse(localStorage.getItem('symbolFavorites')) || [];
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                loadSymbols(tab.dataset.category, currentSearchTerm);
+            });
+        });
+
+        searchBox.addEventListener('input', () => {
+            currentSearchTerm = searchBox.value.toLowerCase();
+            const activeTab = document.querySelector('.tab.active');
+            const category = activeTab.dataset.category;
+            
+            if (currentSearchTerm.length > 0) {
+                showSearchSuggestions(currentSearchTerm, category);
+            } else {
+                searchSuggestions.style.display = 'none';
+            }
+            
+            loadSymbols(category, currentSearchTerm);
+        });
+
+        function showSearchSuggestions(searchTerm, currentCategory) {
+            searchSuggestions.innerHTML = '';
+            let suggestions = [];
+            
+            Object.entries(symbolsData).forEach(([category, symbols]) => {
+                symbols.forEach(symbol => {
+                    if (symbol.name.toLowerCase().includes(searchTerm) || 
+                        symbol.symbol.toLowerCase().includes(searchTerm)) {
+                        suggestions.push({
+                            ...symbol,
+                            category: category
+                        });
+                    }
+                });
+            });
+            
+            suggestions = suggestions.slice(0, 5);
+            
+            if (suggestions.length > 0) {
+                suggestions.forEach(suggestion => {
+                    const suggestionEl = document.createElement('div');
+                    suggestionEl.className = 'search-suggestion';
+                    suggestionEl.innerHTML = `
+                        <span>${suggestion.symbol} ${suggestion.name}</span>
+                        <span class="suggestion-category">${suggestion.category}</span>
+                    `;
+                    
+                    suggestionEl.addEventListener('click', () => {
+                        const tab = document.querySelector(`.tab[data-category="${suggestion.category}"]`);
+                        if (tab) {
+                            tab.click();
+                        }
+                        searchBox.value = '';
+                        searchSuggestions.style.display = 'none';
+                    });
+                    
+                    searchSuggestions.appendChild(suggestionEl);
+                });
+                searchSuggestions.style.display = 'block';
+            } else {
+                searchSuggestions.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!searchBox.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        function loadSymbols(category, searchTerm = '') {
+            symbolsContainer.innerHTML = '';
+            suggestedResults.style.display = 'none';
+            suggestedSymbolsContainer.innerHTML = '';
+            
+            if (category === 'favorites') {
+                loadFavorites();
+                return;
+            }
+            
+            if (symbolsData[category]) {
+                let symbolsToShow = symbolsData[category];
+                
+                if (searchTerm) {
+                    symbolsToShow = symbolsData[category].filter(item => 
+                        item.name.toLowerCase().includes(searchTerm) || 
+                        item.symbol.toLowerCase().includes(searchTerm)
+                    );
+                    
+                    if (symbolsToShow.length === 0) {
+                        showSuggestedResults(searchTerm, category);
+                    }
+                }
+                
+                if (symbolsToShow.length > 0) {
+                    symbolsToShow.forEach(item => {
+                        createSymbolCard(item, category);
+                    });
+                } else if (!searchTerm) {
+                    symbolsContainer.innerHTML = '<div class="no-results">No symbols in this category</div>';
+                }
+            }
+        }
+
+        function showSuggestedResults(searchTerm, currentCategory) {
+            suggestedResults.style.display = 'block';
+            
+            Object.entries(symbolsData).forEach(([category, symbols]) => {
+                if (category !== currentCategory) {
+                    const matchingSymbols = symbols.filter(item => 
+                        item.name.toLowerCase().includes(searchTerm) || 
+                        item.symbol.toLowerCase().includes(searchTerm)
+                    );
+                    
+                    matchingSymbols.forEach(item => {
+                        createSuggestedSymbolCard(item, category);
+                    });
+                }
+            });
+            
+            if (suggestedSymbolsContainer.children.length === 0) {
+                suggestedResults.style.display = 'none';
+            }
+        }
+
+        function createSymbolCard(item, category) {
+            const symbolCard = document.createElement('div');
+            const isFavorite = favorites.some(fav => fav.symbol === item.symbol && fav.category === category);
+            
+            symbolCard.className = `symbol-card ${isFavorite ? 'favorite' : ''}`;
+            symbolCard.innerHTML = `
+                <div class="symbol">${item.symbol}</div>
+                <div class="symbol-name">${item.name}</div>
+            `;
+            
+            symbolCard.addEventListener('click', () => {
+                copyToClipboard(item.symbol);
+                showCopyNotification();
+                
+                addToComposer(item.symbol);
+            });
+            
+            let holdTimer;
+            let isHolding = false;
+
+            symbolCard.addEventListener('mousedown', (e) => {
+                isHolding = true;
+                holdTimer = setTimeout(() => {
+                    if (isHolding) {
+                        toggleFavorite(item, category, symbolCard);
+                        symbolCard.style.transform = 'scale(0.95)';
+                        symbolCard.style.backgroundColor = 'var(--light-gray)';
+                    }
+                }, 800);
+            });
+
+            symbolCard.addEventListener('mouseup', (e) => {
+                clearTimeout(holdTimer);
+                isHolding = false;
+                symbolCard.style.transform = '';
+                symbolCard.style.backgroundColor = '';
+            });
+
+            symbolCard.addEventListener('mouseleave', (e) => {
+                clearTimeout(holdTimer);
+                isHolding = false;
+                symbolCard.style.transform = '';
+                symbolCard.style.backgroundColor = '';
+            });
+
+            symbolCard.addEventListener('touchstart', (e) => {
+                isHolding = true;
+                holdTimer = setTimeout(() => {
+                    if (isHolding) {
+                        toggleFavorite(item, category, symbolCard);
+                        symbolCard.style.transform = 'scale(0.95)';
+                        symbolCard.style.backgroundColor = 'var(--light-gray)';
+                    }
+                }, 800);
+            });
+
+            symbolCard.addEventListener('touchend', (e) => {
+                clearTimeout(holdTimer);
+                isHolding = false;
+                symbolCard.style.transform = '';
+                symbolCard.style.backgroundColor = '';
+            });
+            
+            symbolsContainer.appendChild(symbolCard);
+        }
+
+        function createSuggestedSymbolCard(item, category) {
+            const symbolCard = document.createElement('div');
+            const isFavorite = favorites.some(fav => fav.symbol === item.symbol && fav.category === category);
+            
+            symbolCard.className = `symbol-card ${isFavorite ? 'favorite' : ''}`;
+            symbolCard.innerHTML = `
+                <div class="symbol">${item.symbol}</div>
+                <div class="symbol-name">${item.name} <small>(${category})</small></div>
+            `;
+            
+            symbolCard.addEventListener('click', () => {
+                copyToClipboard(item.symbol);
+                showCopyNotification();
+                
+                addToComposer(item.symbol);
+            });
+            
+            let holdTimer;
+            let isHolding = false;
+
+            symbolCard.addEventListener('mousedown', (e) => {
+                isHolding = true;
+                holdTimer = setTimeout(() => {
+                    if (isHolding) {
+                        toggleFavorite(item, category, symbolCard);
+                        symbolCard.style.transform = 'scale(0.95)';
+                        symbolCard.style.backgroundColor = 'var(--light-gray)';
+                    }
+                }, 800);
+            });
+
+            symbolCard.addEventListener('mouseup', (e) => {
+                clearTimeout(holdTimer);
+                isHolding = false;
+
+                symbolCard.style.transform = '';
+                symbolCard.style.backgroundColor = '';
+            });
+
+            symbolCard.addEventListener('mouseleave', (e) => {
+                clearTimeout(holdTimer);
+                isHolding = false;
+                symbolCard.style.transform = '';
+                symbolCard.style.backgroundColor = '';
+            });
+            symbolCard.addEventListener('touchstart', (e) => {
+                isHolding = true;
+                holdTimer = setTimeout(() => {
+                    if (isHolding) {
+                        toggleFavorite(item, category, symbolCard);
+                        symbolCard.style.transform = 'scale(0.95)';
+                        symbolCard.style.backgroundColor = 'var(--light-gray)';
+                    }
+                }, 800);
+            });
+
+            symbolCard.addEventListener('touchend', (e) => {
+                clearTimeout(holdTimer);
+                isHolding = false;
+                symbolCard.style.transform = '';
+                symbolCard.style.backgroundColor = '';
+            });
+            
+            suggestedSymbolsContainer.appendChild(symbolCard);
+        }
+
+        function toggleFavorite(item, category, cardElement) {
+            const favoriteIndex = favorites.findIndex(fav => 
+                fav.symbol === item.symbol && fav.category === category
+            );
+            
+            if (favoriteIndex === -1) {
+                favorites.push({
+                    symbol: item.symbol,
+                    name: item.name,
+                    category: category
+                });
+                cardElement.classList.add('favorite');
+                showCopyNotification('Added to favorites!');
+            } else {
+                favorites.splice(favoriteIndex, 1);
+                cardElement.classList.remove('favorite');
+                showCopyNotification('Removed from favorites!');
+            }
+            
+            localStorage.setItem('symbolFavorites', JSON.stringify(favorites));
+            
+            const activeTab = document.querySelector('.tab.active');
+            if (activeTab && activeTab.dataset.category === 'favorites') {
+                loadFavorites();
+            }
+        }
+
+        function loadFavorites() {
+            symbolsContainer.innerHTML = '';
+            
+            if (favorites.length === 0) {
+                symbolsContainer.innerHTML = '<div class="no-results">No favorites yet. Hold any symbol for 1 second to add it to favorites.</div>';
+                return;
+            }
+            
+            favorites.forEach(fav => {
+                const symbolCard = document.createElement('div');
+                symbolCard.className = 'symbol-card favorite';
+                symbolCard.innerHTML = `
+                    <div class="symbol">${fav.symbol}</div>
+                    <div class="symbol-name">${fav.name} <small>(${fav.category})</small></div>
+                `;
+                
+                symbolCard.addEventListener('click', () => {
+                    copyToClipboard(fav.symbol);
+                    showCopyNotification();
+                    
+                    addToComposer(fav.symbol);
+                });
+                
+                let holdTimer;
+                let isHolding = false;
+
+                symbolCard.addEventListener('mousedown', (e) => {
+                    isHolding = true;
+                    holdTimer = setTimeout(() => {
+                        if (isHolding) {
+                            const favoriteIndex = favorites.findIndex(f => 
+                                f.symbol === fav.symbol && f.category === fav.category
+                            );
+                            
+                            if (favoriteIndex !== -1) {
+                                favorites.splice(favoriteIndex, 1);
+                                localStorage.setItem('symbolFavorites', JSON.stringify(favorites));
+                                loadFavorites();
+                                showCopyNotification('Removed from favorites!');
+                            }
+                            symbolCard.style.transform = 'scale(0.95)';
+                            symbolCard.style.backgroundColor = 'var(--light-gray)';
+                        }
+                    }, 800);
+                });
+
+                symbolCard.addEventListener('mouseup', (e) => {
+                    clearTimeout(holdTimer);
+                    isHolding = false;
+                    
+                    symbolCard.style.transform = '';
+                    symbolCard.style.backgroundColor = '';
+                });
+
+                symbolCard.addEventListener('mouseleave', (e) => {
+                    clearTimeout(holdTimer);
+                    isHolding = false;
+                    
+                    symbolCard.style.transform = '';
+                    symbolCard.style.backgroundColor = '';
+                });
+
+               
+                symbolCard.addEventListener('touchstart', (e) => {
+                    isHolding = true;
+                    holdTimer = setTimeout(() => {
+                        if (isHolding) {
+                            const favoriteIndex = favorites.findIndex(f => 
+                                f.symbol === fav.symbol && f.category === fav.category
+                            );
+                            
+                            if (favoriteIndex !== -1) {
+                                favorites.splice(favoriteIndex, 1);
+                                localStorage.setItem('symbolFavorites', JSON.stringify(favorites));
+                                loadFavorites();
+                                showCopyNotification('Removed from favorites!');
+                            }
+              
+                            symbolCard.style.transform = 'scale(0.95)';
+                            symbolCard.style.backgroundColor = 'var(--light-gray)';
+                        }
+                    }, 800);
+                });
+
+                symbolCard.addEventListener('touchend', (e) => {
+                    clearTimeout(holdTimer);
+                    isHolding = false;
+             
+                    symbolCard.style.transform = '';
+                    symbolCard.style.backgroundColor = '';
+                });
+                
+                symbolsContainer.appendChild(symbolCard);
+            });
+        }
+
+        function addToComposer(symbol) {
+            const currentText = composerTextarea.value;
+            const cursorPosition = composerTextarea.selectionStart;
+            
+            const newText = currentText.substring(0, cursorPosition) + 
+                           symbol + 
+                           currentText.substring(cursorPosition);
+            
+            composerTextarea.value = newText;
+
+            updateCharacterCount();
+            
+            composerTextarea.focus();
+            composerTextarea.selectionStart = cursorPosition + symbol.length;
+            composerTextarea.selectionEnd = cursorPosition + symbol.length;
+        }
+
+        function updateCharacterCount() {
+            const text = composerTextarea.value;
+            characterCount.textContent = text.length;
+        }
+
+        function copyComposerText() {
+            const text = composerTextarea.value;
+            if (text.trim() === '') {
+                showCopyNotification('Composer is empty!');
+                return;
+            }
+            
+            copyToClipboard(text);
+            showCopyNotification('Text copied to clipboard!');
+        }
+
+        function clearComposer() {
+            composerTextarea.value = '';
+            updateCharacterCount();
+            composerTextarea.focus();
+        }
+
+        composerTextarea.addEventListener('input', updateCharacterCount);
+        copyComposerButton.addEventListener('click', copyComposerText);
+        clearComposerButton.addEventListener('click', clearComposer);
+
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
+        function showCopyNotification(message = 'Symbol copied to clipboard!') {
+            copyNotification.textContent = message;
+            copyNotification.classList.add('show');
+            setTimeout(() => {
+                copyNotification.classList.remove('show');
+            }, 2000);
+        }
+
+        function showCreditsModal() {
+            document.getElementById('creditsModal').style.display = 'flex';
+        }
+
+        function closeCreditsModal() {
+            document.getElementById('creditsModal').style.display = 'none';
+        }
+
+        document.getElementById('creditsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCreditsModal();
+            }
+        });
+        
+        updateCharacterCount();
+        loadSymbols('math');
+    </script>
+</body>
+</html>
