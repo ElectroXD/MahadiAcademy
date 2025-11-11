@@ -1,4 +1,4 @@
-# MahadiAcademy - Science Symbols Website
+# <img width="30" height="40" alt="MahadiAcademy" src="https://github.com/user-attachments/assets/a316b6ab-497f-44db-a095-260ae6fd903e" />    MahadiAcademy - Science Symbols Website
 
 A comprehensive collection of scientific symbols for Mathematics, Physics, and Chemistry, designed specifically for Deloyar Sir at Mahadi Academy.
 
