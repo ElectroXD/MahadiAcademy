@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Science Symbols</title>
+    <title>Science Symbols & Algebra Calculator</title>
     <link rel="icon" href="MahadiAcademy.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- MathJax for Algebra Calculator -->
+    <script>
+        window.MathJax = {
+            loader: {load: ['input/asciimath', 'output/chtml']},
+            asciimath: {delimiters: [['`','`']]},
+            startup: {typeset: false}
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"></script>
     <style>
         :root {
             --white: #ffffff;
@@ -15,21 +25,9 @@
             --medium-gray: #e0e0e0;
             --accent: #2c2c2c;
             --blue: #0066cc;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: background-color 0.2s, color 0.2s;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Noto Sans Math', 'Cambria Math' , sans-serif;
-            background-color: var(--white);
-            color: var(--black);
-            line-height: 1.6;
-            font-weight: 400;
+            --calculator-bg: #1e1e1e;
+            --calculator-border: #66d9ef;
+            --calculator-text: #fff;
         }
 
         .dark-mode {
@@ -40,10 +38,28 @@
             --medium-gray: #2c2c2c;
             --accent: #f5f5f5;
             --blue: #4dabf7;
+            --calculator-bg: #121212;
+            --calculator-border: #4dabf7;
+            --calculator-text: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Noto Sans Math', 'Cambria Math', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            font-weight: 400;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -182,6 +198,12 @@
             border-color: var(--black);
         }
 
+        .tab[data-category="algebra-calculator"] {
+            background-color: var(--blue);
+            color: var(--white);
+            border-color: var(--blue);
+        }
+
         .symbols-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -219,6 +241,10 @@
             right: 10px;
             color: var(--black);
             font-size: 0.9rem;
+        }
+
+        .dark-mode .symbol-card.favorite::before {
+            color: var(--white);
         }
 
         .symbol {
@@ -308,6 +334,205 @@
         .composer-stats {
             font-size: 0.9rem;
             color: var(--dark-gray);
+        }
+
+        /* Algebra Calculator Styles */
+        .algebra-calculator {
+            display: none;
+            margin: 20px 0 40px;
+        }
+
+        .calculator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calculator-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--blue);
+        }
+
+        .calculator-container {
+            background: var(--calculator-bg);
+            border: 2px solid var(--calculator-border);
+            border-radius: 10px;
+            padding: 20px;
+            color: var(--calculator-text);
+        }
+
+        .calc-input-area {
+            width: 100%;
+            height: 60px;
+            background: var(--white);
+            color: var(--black);
+            border: 2px solid var(--calculator-border);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1.1rem;
+            resize: none;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+
+        .dark-mode .calc-input-area {
+            background: #2c2c2c;
+            color: var(--white);
+        }
+
+        .calc-keyboard {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .dark-mode .calc-keyboard {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .calc-section {
+            flex: 1;
+            min-width: 200px;
+            background: var(--medium-gray);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dark-mode .calc-section {
+            background: #2c2c2c;
+        }
+
+        .calc-section h3 {
+            margin: 0;
+            padding: 8px 12px;
+            background: var(--accent);
+            color: var(--blue);
+            font-size: 0.9rem;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .dark-mode .calc-section h3 {
+            background: #333;
+        }
+
+        .calc-section-content {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .calc-button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .calc-button {
+            background: var(--black);
+            border: none;
+            padding: 8px 12px;
+            color: var(--white);
+            font-size: 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 2px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .calc-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 217, 239, 0.3);
+        }
+
+        .calc-button:active {
+            transform: scale(0.95);
+        }
+
+        .dark-mode .calc-button {
+            background: #333;
+        }
+
+        .calc-output {
+            background: var(--white);
+            border: 1px solid var(--calculator-border);
+            border-radius: 8px;
+            width: 100%;
+            min-height: 60px;
+            font-size: 1.1rem;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+            color: var(--black);
+        }
+
+        .dark-mode .calc-output {
+            background: #2c2c2c;
+            color: var(--white);
+        }
+
+        .calc-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .calc-action-button {
+            padding: 10px 20px;
+            background-color: var(--blue);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .calc-action-button:hover {
+            opacity: 0.9;
+        }
+
+        .calc-copy-status {
+            font-size: 0.9rem;
+            color: #4CAF50;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Scrollbar styling */
+        *::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background: var(--medium-gray);
+            border-radius: 6px;
+        }
+
+        *::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-gray);
         }
 
         .copy-notification {
@@ -440,6 +665,14 @@
                 gap: 10px;
                 align-items: flex-start;
             }
+            
+            .calc-keyboard {
+                max-height: 300px;
+            }
+            
+            .calc-section {
+                min-width: 150px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -459,6 +692,10 @@
                 padding: 8px 16px;
                 font-size: 0.9rem;
             }
+            
+            .calc-section {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
@@ -467,8 +704,8 @@
         <header>
             <div class="header-content">
                 <div>
-                    <h1>Science Symbols</h1>
-                    <p class="subtitle">Copy and paste symbols for Math, Physics, and Chemistry</p>
+                    <h1>Science Symbols & Algebra Calculator</h1>
+                    <p class="subtitle">Copy symbols for Math, Physics, Chemistry and use the Algebra Calculator</p>
                 </div>
                 <button class="theme-toggle" id="themeToggle">
                     <i class="fas fa-moon"></i>
@@ -522,13 +759,128 @@
                 <button class="tab" data-category="discrete">Discrete Math</button>
                 <button class="tab" data-category="geometry">Geometry</button>
                 <button class="tab" data-category="favorites">Favorites ★</button>
+                <button class="tab" data-category="algebra-calculator">Algebra Calculator</button>
             </div>
 
-            <div class="tip-message">
+            <div class="tip-message" id="tipMessage">
                 Hold any symbol for 1 second to add/remove from favorites
             </div>
 
             <div class="symbols-container" id="symbolsContainer">
+            </div>
+
+            <!-- Algebra Calculator Section -->
+            <div class="algebra-calculator" id="algebraCalculator">
+                <div class="calculator-header">
+                    <h2 class="calculator-title">Algebra Calculator</h2>
+                    <div class="tip-message">Type expressions like `\pi\lfloor x \rfloor\frac{a}{b}` and copy them</div>
+                </div>
+                
+                <div class="calculator-container">
+                    <textarea class="calc-input-area" id="calcInputArea" placeholder="Type your algebra expression using AsciiMath... (e.g., `\pi\lfloor x \rfloor\frac{a}{b}`)"></textarea>
+                    
+                    <div class="calc-keyboard">
+                        <!-- Basic Operators -->
+                        <div class="calc-section">
+                            <h3>Basic Operators</h3>
+                            <div class="calc-section-content">
+                                <div class="calc-button-row">
+                                    <button class="calc-button" onclick="calcInsertSymbol('+')">+</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('-')">−</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\times')">×</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\div')">÷</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('=')">=</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\neq')">≠</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('>')">></button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('<')"><</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\geq')">≥</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\leq')">≤</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Algebra -->
+                        <div class="calc-section">
+                            <h3>Algebra</h3>
+                            <div class="calc-section-content">
+                                <div class="calc-button-row">
+                                    <button class="calc-button" onclick="calcInsertSymbol('x')">x</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('y')">y</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\sqrt{}')">√</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\frac{}{}')">frac</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('^')">^</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('_')">_</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\pi')">π</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\infty')">∞</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculus -->
+                        <div class="calc-section">
+                            <h3>Calculus</h3>
+                            <div class="calc-section-content">
+                                <div class="calc-button-row">
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\lim_{x \\to }')">lim</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\int')">∫</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\frac{dy}{dx}')">dy/dx</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\frac{d^2 y}{dx^2}')">d²y/dx²</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\frac{\\partial f}{\\partial x}')">∂f/∂x</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\sum')">∑</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Trigonometry -->
+                        <div class="calc-section">
+                            <h3>Trigonometry</h3>
+                            <div class="calc-section-content">
+                                <div class="calc-button-row">
+                                    <button class="calc-button" onclick="calcInsertSymbol('sin')">sin</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('cos')">cos</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('tan')">tan</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\theta')">θ</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\sin^{-1}')">sin⁻¹</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\cos^{-1}')">cos⁻¹</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Greek Letters -->
+                        <div class="calc-section">
+                            <h3>Greek Letters</h3>
+                            <div class="calc-section-content">
+                                <div class="calc-button-row">
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\alpha')">α</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\beta')">β</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\gamma')">γ</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\delta')">δ</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\Delta')">Δ</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\Sigma')">Σ</button>
+                                    <button class="calc-button" onclick="calcInsertSymbol('\\Omega')">Ω</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="calc-output" id="calcOutput">
+                        Preview will appear here...
+                    </div>
+                    
+                    <div class="calc-actions">
+                        <button class="calc-action-button" onclick="calcCopyToClipboard()">
+                            <i class="fas fa-copy"></i> Copy Expression
+                        </button>
+                        <button class="calc-action-button" onclick="calcClear()">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                        <button class="calc-action-button" onclick="calcInsertToComposer()">
+                            <i class="fas fa-paste"></i> Add to Composer
+                        </button>
+                    </div>
+                    
+                    <div class="calc-copy-status" id="calcCopyStatus"></div>
+                </div>
             </div>
 
             <div class="suggested-results" id="suggestedResults" style="display: none;">
@@ -557,6 +909,7 @@
             <div>
                 <div class="companies">
                     <div class="company-tag">Mahadi Academy</div>
+                    <div class="company-tag">Algebra Calculator</div>
                 </div>
             </div> 
         </footer>
@@ -583,6 +936,7 @@
     </div>
 
     <script>
+        // Science Symbols Data (unchanged from your original)
         const symbolsData = {
             math: [
                 { name: "Pi", symbol: "π" },
@@ -967,6 +1321,7 @@
             ]
         };
 
+        // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
         const tabs = document.querySelectorAll('.tab');
         const symbolsContainer = document.getElementById('symbolsContainer');
@@ -975,15 +1330,23 @@
         const searchSuggestions = document.getElementById('searchSuggestions');
         const suggestedResults = document.getElementById('suggestedResults');
         const suggestedSymbolsContainer = document.getElementById('suggestedSymbolsContainer');
-        
         const composerTextarea = document.getElementById('composerTextarea');
         const copyComposerButton = document.getElementById('copyComposerText');
         const clearComposerButton = document.getElementById('clearComposer');
         const characterCount = document.getElementById('characterCount');
+        const tipMessage = document.getElementById('tipMessage');
+        const algebraCalculator = document.getElementById('algebraCalculator');
+        
+        // Algebra Calculator Elements
+        const calcInputArea = document.getElementById('calcInputArea');
+        const calcOutput = document.getElementById('calcOutput');
+        const calcCopyStatus = document.getElementById('calcCopyStatus');
 
+        // State Variables
         let currentSearchTerm = '';
         let favorites = JSON.parse(localStorage.getItem('symbolFavorites')) || [];
 
+        // Theme Toggle
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             const icon = themeToggle.querySelector('i');
@@ -994,16 +1357,46 @@
                 icon.classList.remove('fa-sun');
                 icon.classList.add('fa-moon');
             }
+            // Update calculator preview when theme changes
+            calcLiveRender();
         });
 
+        // Tab Switching
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                loadSymbols(tab.dataset.category, currentSearchTerm);
+                
+                const category = tab.dataset.category;
+                
+                if (category === 'algebra-calculator') {
+                    // Show Algebra Calculator
+                    symbolsContainer.style.display = 'none';
+                    suggestedResults.style.display = 'none';
+                    document.querySelector('.composer-section').style.display = 'none';
+                    document.querySelector('.search-container').style.display = 'none';
+                    tipMessage.style.display = 'none';
+                    algebraCalculator.style.display = 'block';
+                    
+                    // Focus on calculator input
+                    setTimeout(() => {
+                        calcInputArea.focus();
+                        calcLiveRender();
+                    }, 100);
+                } else {
+                    // Show Symbols
+                    symbolsContainer.style.display = 'grid';
+                    document.querySelector('.composer-section').style.display = 'block';
+                    document.querySelector('.search-container').style.display = 'block';
+                    tipMessage.style.display = 'block';
+                    algebraCalculator.style.display = 'none';
+                    
+                    loadSymbols(category, currentSearchTerm);
+                }
             });
         });
 
+        // Search Functionality
         searchBox.addEventListener('input', () => {
             currentSearchTerm = searchBox.value.toLowerCase();
             const activeTab = document.querySelector('.tab.active');
@@ -1015,7 +1408,9 @@
                 searchSuggestions.style.display = 'none';
             }
             
-            loadSymbols(category, currentSearchTerm);
+            if (category !== 'algebra-calculator') {
+                loadSymbols(category, currentSearchTerm);
+            }
         });
 
         function showSearchSuggestions(searchTerm, currentCategory) {
@@ -1140,6 +1535,7 @@
                 addToComposer(item.symbol);
             });
             
+            // Long press for favorites
             let holdTimer;
             let isHolding = false;
 
@@ -1206,53 +1602,7 @@
                 addToComposer(item.symbol);
             });
             
-            let holdTimer;
-            let isHolding = false;
-
-            symbolCard.addEventListener('mousedown', (e) => {
-                isHolding = true;
-                holdTimer = setTimeout(() => {
-                    if (isHolding) {
-                        toggleFavorite(item, category, symbolCard);
-                        symbolCard.style.transform = 'scale(0.95)';
-                        symbolCard.style.backgroundColor = 'var(--light-gray)';
-                    }
-                }, 800);
-            });
-
-            symbolCard.addEventListener('mouseup', (e) => {
-                clearTimeout(holdTimer);
-                isHolding = false;
-
-                symbolCard.style.transform = '';
-                symbolCard.style.backgroundColor = '';
-            });
-
-            symbolCard.addEventListener('mouseleave', (e) => {
-                clearTimeout(holdTimer);
-                isHolding = false;
-                symbolCard.style.transform = '';
-                symbolCard.style.backgroundColor = '';
-            });
-            symbolCard.addEventListener('touchstart', (e) => {
-                isHolding = true;
-                holdTimer = setTimeout(() => {
-                    if (isHolding) {
-                        toggleFavorite(item, category, symbolCard);
-                        symbolCard.style.transform = 'scale(0.95)';
-                        symbolCard.style.backgroundColor = 'var(--light-gray)';
-                    }
-                }, 800);
-            });
-
-            symbolCard.addEventListener('touchend', (e) => {
-                clearTimeout(holdTimer);
-                isHolding = false;
-                symbolCard.style.transform = '';
-                symbolCard.style.backgroundColor = '';
-            });
-            
-            suggestedSymbolsContainer.appendChild(symbolCard);
+            symbolsContainer.appendChild(symbolCard);
         }
 
         function toggleFavorite(item, category, cardElement) {
@@ -1322,8 +1672,6 @@
                                 loadFavorites();
                                 showCopyNotification('Removed from favorites!');
                             }
-                            symbolCard.style.transform = 'scale(0.95)';
-                            symbolCard.style.backgroundColor = 'var(--light-gray)';
                         }
                     }, 800);
                 });
@@ -1331,53 +1679,13 @@
                 symbolCard.addEventListener('mouseup', (e) => {
                     clearTimeout(holdTimer);
                     isHolding = false;
-                    
-                    symbolCard.style.transform = '';
-                    symbolCard.style.backgroundColor = '';
                 });
 
-                symbolCard.addEventListener('mouseleave', (e) => {
-                    clearTimeout(holdTimer);
-                    isHolding = false;
-                    
-                    symbolCard.style.transform = '';
-                    symbolCard.style.backgroundColor = '';
-                });
-
-               
-                symbolCard.addEventListener('touchstart', (e) => {
-                    isHolding = true;
-                    holdTimer = setTimeout(() => {
-                        if (isHolding) {
-                            const favoriteIndex = favorites.findIndex(f => 
-                                f.symbol === fav.symbol && f.category === fav.category
-                            );
-                            
-                            if (favoriteIndex !== -1) {
-                                favorites.splice(favoriteIndex, 1);
-                                localStorage.setItem('symbolFavorites', JSON.stringify(favorites));
-                                loadFavorites();
-                                showCopyNotification('Removed from favorites!');
-                            }
-              
-                            symbolCard.style.transform = 'scale(0.95)';
-                            symbolCard.style.backgroundColor = 'var(--light-gray)';
-                        }
-                    }, 800);
-                });
-
-                symbolCard.addEventListener('touchend', (e) => {
-                    clearTimeout(holdTimer);
-                    isHolding = false;
-             
-                    symbolCard.style.transform = '';
-                    symbolCard.style.backgroundColor = '';
-                });
-                
                 symbolsContainer.appendChild(symbolCard);
             });
         }
 
+        // Text Composer Functions
         function addToComposer(symbol) {
             const currentText = composerTextarea.value;
             const cursorPosition = composerTextarea.selectionStart;
@@ -1387,7 +1695,6 @@
                            currentText.substring(cursorPosition);
             
             composerTextarea.value = newText;
-
             updateCharacterCount();
             
             composerTextarea.focus();
@@ -1400,7 +1707,9 @@
             characterCount.textContent = text.length;
         }
 
-        function copyComposerText() {
+        composerTextarea.addEventListener('input', updateCharacterCount);
+        
+        copyComposerButton.addEventListener('click', () => {
             const text = composerTextarea.value;
             if (text.trim() === '') {
                 showCopyNotification('Composer is empty!');
@@ -1409,18 +1718,15 @@
             
             copyToClipboard(text);
             showCopyNotification('Text copied to clipboard!');
-        }
-
-        function clearComposer() {
+        });
+        
+        clearComposerButton.addEventListener('click', () => {
             composerTextarea.value = '';
             updateCharacterCount();
             composerTextarea.focus();
-        }
+        });
 
-        composerTextarea.addEventListener('input', updateCharacterCount);
-        copyComposerButton.addEventListener('click', copyComposerText);
-        clearComposerButton.addEventListener('click', clearComposer);
-
+        // Utility Functions
         function copyToClipboard(text) {
             const textarea = document.createElement('textarea');
             textarea.value = text;
@@ -1438,6 +1744,86 @@
             }, 2000);
         }
 
+        // Algebra Calculator Functions
+        function calcInsertSymbol(symbol) {
+            const start = calcInputArea.selectionStart;
+            const end = calcInputArea.selectionEnd;
+            const text = calcInputArea.value;
+            calcInputArea.value = text.slice(0, start) + symbol + text.slice(end);
+            calcInputArea.focus();
+            calcInputArea.selectionStart = calcInputArea.selectionEnd = start + symbol.length;
+            calcLiveRender();
+        }
+
+        function calcLiveRender() {
+            const expr = calcInputArea.value.trim();
+            if (expr) {
+                // Wrap in backticks for MathJax
+                calcOutput.innerHTML = '`' + expr + '`';
+                if (window.MathJax) {
+                    MathJax.typesetClear();
+                    MathJax.typesetPromise([calcOutput]);
+                }
+            } else {
+                calcOutput.textContent = 'Preview will appear here...';
+            }
+        }
+
+        function calcCopyToClipboard() {
+            const expr = calcInputArea.value.trim();
+            if (!expr) {
+                calcCopyStatus.textContent = 'Please enter an expression first!';
+                setTimeout(() => calcCopyStatus.textContent = '', 2000);
+                return;
+            }
+            
+            copyToClipboard(expr);
+            calcCopyStatus.textContent = 'Expression copied to clipboard!';
+            setTimeout(() => calcCopyStatus.textContent = '', 2000);
+            
+            // Also show the main notification
+            showCopyNotification('Algebra expression copied!');
+        }
+
+        function calcClear() {
+            calcInputArea.value = '';
+            calcOutput.textContent = 'Preview will appear here...';
+            calcCopyStatus.textContent = '';
+            calcInputArea.focus();
+        }
+
+        function calcInsertToComposer() {
+            const expr = calcInputArea.value.trim();
+            if (!expr) {
+                calcCopyStatus.textContent = 'No expression to add!';
+                setTimeout(() => calcCopyStatus.textContent = '', 2000);
+                return;
+            }
+            
+            addToComposer(expr);
+            calcCopyStatus.textContent = 'Added to composer!';
+            setTimeout(() => calcCopyStatus.textContent = '', 2000);
+            
+            // Switch back to symbols view
+            document.querySelector('.tab[data-category="math"]').click();
+        }
+
+        // Event Listeners for Algebra Calculator
+        calcInputArea.addEventListener('input', calcLiveRender);
+        
+        // Keyboard shortcuts for calculator
+        calcInputArea.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'c') {
+                e.preventDefault();
+                calcCopyToClipboard();
+            }
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                calcInsertToComposer();
+            }
+        });
+
+        // Modal Functions
         function showCreditsModal() {
             document.getElementById('creditsModal').style.display = 'flex';
         }
@@ -1451,9 +1837,17 @@
                 closeCreditsModal();
             }
         });
-        
+
+        // Initialize
         updateCharacterCount();
         loadSymbols('math');
+        
+        // Initialize MathJax if needed
+        if (window.MathJax) {
+            MathJax.startup.promise.then(() => {
+                console.log('MathJax is ready');
+            });
+        }
     </script>
 </body>
 </html>
